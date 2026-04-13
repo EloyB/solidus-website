@@ -640,7 +640,7 @@ export interface Investment {
   location: string;
   sector: 'industrial' | 'technology' | 'real-estate' | 'special-situations';
   description: string;
-  status?: ('active' | 'exited' | 'in-development') | null;
+  investmentStatus?: ('active' | 'exited' | 'in-development') | null;
   sortOrder?: number | null;
   publishedAt?: string | null;
   /**
@@ -1035,7 +1035,7 @@ export interface InvestmentsSelect<T extends boolean = true> {
   location?: T;
   sector?: T;
   description?: T;
-  status?: T;
+  investmentStatus?: T;
   sortOrder?: T;
   publishedAt?: T;
   generateSlug?: T;

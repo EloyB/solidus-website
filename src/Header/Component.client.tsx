@@ -116,5 +116,5 @@ export const NAV_ITEMS = [
   // { label: 'Focus', href: '/focus' },
   // { label: 'Investments', href: '/investments' },
   // { label: 'Opportunities', href: '/opportunities' },
-  // { label: 'Contact', href: '/contact' },
+  { label: 'Contact', href: '/contact' },
 ]

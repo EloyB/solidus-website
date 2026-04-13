@@ -1,32 +1,92 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
 import Link from 'next/link'
 import React from 'react'
 
-import type { Footer } from '@/payload-types'
-
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
-import { CMSLink } from '@/components/Link'
+import type { Footer as FooterType } from '@/payload-types'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 import { Logo } from '@/components/Logo/Logo'
+import { CMSLink } from '@/components/Link'
+
+const FALLBACK_NAV = [
+  { label: 'About', href: '/about' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Team', href: '/team' },
+  { label: 'Contact', href: '/contact' },
+]
 
 export async function Footer() {
-  const footerData: Footer = await getCachedGlobal('footer', 1)()
+  const footerData: FooterType = await getCachedGlobal('footer', 1)()
 
+  const description =
+    footerData?.description ||
+    'A private investment partnership deploying family capital in selected businesses, real estate, and financing.'
+  const email = footerData?.contactEmail || 'info@solidus.com'
   const navItems = footerData?.navItems || []
 
   return (
-    <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white">
-      <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
-        <Link className="flex items-center" href="/">
-          <Logo />
-        </Link>
+    <footer className="bg-navy border-t-2 border-gold">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-24">
+          {/* Left */}
+          <div>
+            <Link href="/" aria-label="Solidus — Home">
+              <Logo variant="light" />
+            </Link>
+            <p className="mt-4 text-sm text-white/35 leading-relaxed max-w-xs">{description}</p>
+          </div>
 
-        <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
-          <ThemeSelector />
-          <nav className="flex flex-col md:flex-row gap-4">
-            {navItems.map(({ link }, i) => {
-              return <CMSLink className="text-white" key={i} {...link} />
-            })}
-          </nav>
+          {/* Right */}
+          <div className="grid grid-cols-2 gap-10 sm:gap-16">
+            <div>
+              <p className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-4 font-sans">
+                Navigate
+              </p>
+              <nav className="flex flex-col gap-2.5">
+                {navItems.length > 0
+                  ? navItems.map(({ link }, i) => (
+                      <CMSLink
+                        key={i}
+                        {...link}
+                        className="text-sm text-white/45 hover:text-white transition-colors duration-150"
+                      />
+                    ))
+                  : FALLBACK_NAV.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="text-sm text-white/45 hover:text-white transition-colors duration-150"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+              </nav>
+            </div>
+
+            <div>
+              <p className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-4 font-sans">
+                Contact
+              </p>
+              <div className="flex flex-col gap-2.5">
+                <a
+                  href={`mailto:${email}`}
+                  className="text-sm text-white/45 hover:text-white transition-colors duration-150"
+                >
+                  {email}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <p className="text-xs text-white/20">
+            © {new Date().getFullYear()} Solidus Capital. All rights reserved.
+          </p>
+          <p className="text-[10px] tracking-[0.2em] uppercase text-white/15">
+            Gebouwd door{' '}
+            <a href="https://studio-swyft.be" className="hover:text-white/70 transition-colors">
+              Studio Swyft
+            </a>
+          </p>
         </div>
       </div>
     </footer>

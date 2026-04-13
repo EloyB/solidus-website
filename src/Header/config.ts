@@ -25,6 +25,18 @@ export const Header: GlobalConfig = {
         },
       },
     },
+    {
+      name: 'ctaLabel',
+      type: 'text',
+      label: 'CTA Button Label',
+      defaultValue: 'Get in Touch',
+    },
+    {
+      name: 'ctaUrl',
+      type: 'text',
+      label: 'CTA Button URL',
+      defaultValue: '/contact',
+    },
   ],
   hooks: {
     afterChange: [revalidateHeader],

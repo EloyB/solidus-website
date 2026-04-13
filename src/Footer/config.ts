@@ -10,6 +10,16 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: 'description',
+      type: 'textarea',
+      label: 'Company Description',
+    },
+    {
+      name: 'contactEmail',
+      type: 'text',
+      label: 'Contact Email',
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [

@@ -19,7 +19,29 @@
   h6 {
     font-weight: unset;
     font-size: unset;
+    font-family: var(--font-display), Georgia, serif;
   }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes expandWidth {
+  from { width: 0; }
+  to { width: 3.5rem; }
 }
 
 @plugin "@tailwindcss/typography";
@@ -45,6 +67,12 @@
   --breakpoint-2xl: 86rem;
   --font-mono: var(--font-geist-mono);
   --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-lora);
+  --color-gold: #c6a96a;
+  --color-navy: #0f1f3a;
+  --color-navy-soft: #1d2f52;
+  --color-brand-muted: #667085;
+  --color-off-white: #f7f8fa;
 }
 
 @layer utilities {
@@ -215,10 +243,5 @@
 }
 
 html {
-  opacity: 0;
-}
-
-html[data-theme='dark'],
-html[data-theme='light'] {
   opacity: initial;
 }

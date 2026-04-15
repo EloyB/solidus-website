@@ -19,7 +19,7 @@ export async function Footer() {
   const description =
     footerData?.description ||
     'A private investment partnership deploying family capital in selected businesses, real estate, and financing.'
-  const email = footerData?.contactEmail || 'info@solidus.com'
+  const email = footerData?.contactEmail || 'info@soliduscapital.org'
   const navItems = footerData?.navItems || []
 
   return (
@@ -36,31 +36,6 @@ export async function Footer() {
 
           {/* Right */}
           <div className="grid grid-cols-2 gap-10 sm:gap-16">
-            <div>
-              <p className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-4 font-sans">
-                Navigate
-              </p>
-              <nav className="flex flex-col gap-2.5">
-                {navItems.length > 0
-                  ? navItems.map(({ link }, i) => (
-                      <CMSLink
-                        key={i}
-                        {...link}
-                        className="text-sm text-white/45 hover:text-white transition-colors duration-150"
-                      />
-                    ))
-                  : FALLBACK_NAV.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="text-sm text-white/45 hover:text-white transition-colors duration-150"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-              </nav>
-            </div>
-
             <div>
               <p className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-4 font-sans">
                 Contact
@@ -83,7 +58,10 @@ export async function Footer() {
           </p>
           <p className="text-[10px] tracking-[0.2em] uppercase text-white/15">
             Gebouwd door{' '}
-            <a href="https://studio-swyft.be" className="hover:text-white/70 transition-colors">
+            <a
+              href="https://studio-swyft.be"
+              className="text-white/50 hover:text-white/70 transition-colors"
+            >
               Studio Swyft
             </a>
           </p>

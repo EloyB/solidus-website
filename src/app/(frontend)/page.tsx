@@ -128,13 +128,13 @@ function Hero({ data }: { data: HomePage }) {
             </p>
             <div className="flex flex-wrap gap-3.5 mt-7">
               <Link
-                href="/investments"
+                href="#investments"
                 className="inline-flex items-center justify-center min-h-12 px-6 rounded-full bg-gold text-navy font-semibold text-sm hover:-translate-y-px hover:brightness-105 transition-all duration-200 shadow-[0_10px_30px_rgba(15,31,58,0.08)]"
               >
                 Our Investments
               </Link>
               <Link
-                href="/contact"
+                href="mailto:info@soliduscapital.org"
                 className="inline-flex items-center justify-center min-h-12 px-6 rounded-full border border-white/24 text-white font-medium text-sm hover:border-white/50 transition-all duration-200"
               >
                 Get in Touch
@@ -249,7 +249,7 @@ function Focus({ data }: { data: HomePage }) {
       ]
 
   return (
-    <section className="py-[84px] bg-off-white">
+    <section id="investments" className="py-[84px] bg-off-white">
       <div className="max-w-[1180px] mx-auto px-5">
         <SectionHeader label={label} title={heading} description={description} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -430,7 +430,7 @@ function ContactSection({ data }: { data: HomePage }) {
   const description =
     data.contactDescription ||
     'For investment opportunities, partnerships, or general enquiries, please contact us directly.'
-  const email = data.contactEmail || 'info@solidus.com'
+  const email = data.contactEmail || 'info@soliduscapital.org'
   const region = data.contactRegion || 'Belgium / Netherlands'
   const partnershipTitle = data.partnershipTitle || 'Partnership mindset'
   const partnershipDescription =
@@ -484,8 +484,7 @@ export default async function HomePageRoute() {
         {
           name: 'LCT-Textilligence B.V.',
           location: 'Tiel, Netherlands',
-          description:
-            'Automated garment dispensing systems for healthcare and industrial users.',
+          description: 'Automated garment dispensing systems for healthcare and industrial users.',
         },
         {
           name: 'GotliLabs B.V.',

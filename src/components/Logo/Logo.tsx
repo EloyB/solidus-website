@@ -1,4 +1,5 @@
 import { cn } from '@/utilities/ui'
+import Image from 'next/image'
 import React from 'react'
 
 interface Props {
@@ -8,16 +9,16 @@ interface Props {
   variant?: 'dark' | 'light'
 }
 
-export const Logo = ({ className, variant = 'dark' }: Props) => {
+export const Logo = ({ className, loading = 'eager', priority = 'high' }: Props) => {
   return (
-    <span
-      className={cn(
-        'font-display text-lg font-semibold tracking-[0.18em] uppercase select-none',
-        variant === 'dark' ? 'text-navy' : 'text-white',
-        className,
-      )}
-    >
-      Solidus
-    </span>
+    <Image
+      src="/solidus-logo.svg"
+      alt="Solidus"
+      width={140}
+      height={40}
+      loading={loading}
+      priority={priority === 'high'}
+      className={cn('h-14 w-auto', className)}
+    />
   )
 }

@@ -18,7 +18,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const pathname = usePathname()
 
   const ctaLabel = data?.ctaLabel || 'Get in Touch'
-  const ctaUrl = data?.ctaUrl || '/contact'
+  const ctaUrl = data?.ctaUrl || 'mailto:info@soliduscapital.org'
 
   const hasNavItems = data?.navItems && data.navItems.length > 0
   const mobileLinks = hasNavItems

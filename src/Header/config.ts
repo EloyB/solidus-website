@@ -35,7 +35,7 @@ export const Header: GlobalConfig = {
       name: 'ctaUrl',
       type: 'text',
       label: 'CTA Button URL',
-      defaultValue: '/contact',
+      defaultValue: 'mailto:info@soliduscapital.org',
     },
   ],
   hooks: {

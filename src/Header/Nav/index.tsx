@@ -13,7 +13,7 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
   const hasNavItems = data?.navItems && data.navItems.length > 0
 
   const ctaLabel = data?.ctaLabel || 'Get in Touch'
-  const ctaUrl = data?.ctaUrl || '/contact'
+  const ctaUrl = data?.ctaUrl || 'mailto:info@soliduscapital.org'
 
   const links = hasNavItems
     ? data.navItems!.map((item) => ({
@@ -29,7 +29,10 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
           <Link
             key={item.href}
             href={item.href}
-            className={['transition-colors duration-150', pathname === item.href ? 'text-navy font-medium' : 'text-navy/60 hover:text-navy'].join(' ')}
+            className={[
+              'transition-colors duration-150',
+              pathname === item.href ? 'text-navy font-medium' : 'text-navy/60 hover:text-navy',
+            ].join(' ')}
           >
             {item.label}
           </Link>

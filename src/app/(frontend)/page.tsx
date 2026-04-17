@@ -298,6 +298,14 @@ function InvestmentsSection({ investments }: { investments: InvestmentDoc[] }) {
                   </h3>
                   <p className="text-brand-muted leading-relaxed">{inv.description}</p>
                 </div>
+                {inv.link && (
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-gold border border-gold/40 rounded-full px-4 py-2 w-fit hover:bg-gold/5 transition-colors">
+                    Visit website
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M1 7h11m0 0L8 3m4 4L8 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                )}
               </Card>
             )
             return inv.link ? (

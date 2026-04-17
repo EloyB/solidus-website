@@ -287,8 +287,8 @@ function InvestmentsSection({ investments }: { investments: InvestmentDoc[] }) {
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {investments.map((inv, i) => {
-            const cardContent = (
-              <Card key={i} className={`flex flex-col gap-4${inv.link ? ' transition-shadow hover:shadow-md' : ''}`}>
+            return (
+              <Card key={i} className="flex flex-col gap-4">
                 <span className="text-gold font-bold tracking-[0.05em] uppercase text-[0.86rem]">
                   {inv.location}
                 </span>
@@ -299,21 +299,14 @@ function InvestmentsSection({ investments }: { investments: InvestmentDoc[] }) {
                   <p className="text-brand-muted leading-relaxed">{inv.description}</p>
                 </div>
                 {inv.link && (
-                  <span className="inline-flex items-center gap-2 text-sm font-bold text-navy hover:text-gold transition-colors">
+                  <a href={inv.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-bold text-navy hover:text-gold transition-colors w-fit">
                     Visit website
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path d="M1 7h11m0 0L8 3m4 4L8 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                  </span>
+                  </a>
                 )}
               </Card>
-            )
-            return inv.link ? (
-              <a key={i} href={inv.link} target="_blank" rel="noopener noreferrer">
-                {cardContent}
-              </a>
-            ) : (
-              cardContent
             )
           })}
         </div>

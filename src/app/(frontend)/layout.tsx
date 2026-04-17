@@ -30,8 +30,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable, lora.variable)} lang="en" suppressHydrationWarning>
       <head>
+        <meta name="google-site-verification" content="--1jKSIK1kCOOFnJMepl53_iSKFOz68E7HGkFs7F7SI" />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Solidus Capital',
+              url: 'https://soliduscapital.org',
+              logo: 'https://soliduscapital.org/solidus-logo.svg',
+              description:
+                'A private investment partnership deploying family capital in selected businesses, real estate and financing opportunities.',
+            }),
+          }}
+        />
       </head>
       <body>
         <Providers>

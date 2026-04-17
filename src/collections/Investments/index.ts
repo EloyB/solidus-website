@@ -61,6 +61,14 @@ export const Investments: CollectionConfig<'investments'> = {
       ],
     },
     {
+      name: 'link',
+      type: 'text',
+      label: 'Website URL',
+      admin: {
+        description: 'External link to the investment (e.g. company website). If set, the investment card becomes clickable.',
+      },
+    },
+    {
       name: 'sortOrder',
       type: 'number',
       defaultValue: 0,

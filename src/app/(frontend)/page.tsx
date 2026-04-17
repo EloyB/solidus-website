@@ -285,19 +285,28 @@ function InvestmentsSection({ investments }: { investments: InvestmentDoc[] }) {
           description="Our portfolio reflects our focus on industry, technology, and real estate. We back opportunities where we can combine capital with experience and long-term commitment."
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {investments.map((inv, i) => (
-            <Card key={i} className="flex flex-col gap-4">
-              <span className="text-gold font-bold tracking-[0.05em] uppercase text-[0.86rem]">
-                {inv.location}
-              </span>
-              <div>
-                <h3 className="font-display font-semibold text-navy text-[1.15rem] mb-1.5">
-                  {inv.name}
-                </h3>
-                <p className="text-brand-muted leading-relaxed">{inv.description}</p>
-              </div>
-            </Card>
-          ))}
+          {investments.map((inv, i) => {
+            const cardContent = (
+              <Card key={i} className={`flex flex-col gap-4${inv.link ? ' transition-shadow hover:shadow-md' : ''}`}>
+                <span className="text-gold font-bold tracking-[0.05em] uppercase text-[0.86rem]">
+                  {inv.location}
+                </span>
+                <div>
+                  <h3 className="font-display font-semibold text-navy text-[1.15rem] mb-1.5">
+                    {inv.name}
+                  </h3>
+                  <p className="text-brand-muted leading-relaxed">{inv.description}</p>
+                </div>
+              </Card>
+            )
+            return inv.link ? (
+              <a key={i} href={inv.link} target="_blank" rel="noopener noreferrer">
+                {cardContent}
+              </a>
+            ) : (
+              cardContent
+            )
+          })}
         </div>
       </div>
     </section>

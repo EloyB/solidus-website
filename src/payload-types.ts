@@ -641,6 +641,10 @@ export interface Investment {
   sector: 'industrial' | 'technology' | 'real-estate' | 'special-situations';
   description: string;
   investmentStatus?: ('active' | 'exited' | 'in-development') | null;
+  /**
+   * External link to the investment (e.g. company website). If set, the investment card becomes clickable.
+   */
+  link?: string | null;
   sortOrder?: number | null;
   publishedAt?: string | null;
   /**
@@ -1036,6 +1040,7 @@ export interface InvestmentsSelect<T extends boolean = true> {
   sector?: T;
   description?: T;
   investmentStatus?: T;
+  link?: T;
   sortOrder?: T;
   publishedAt?: T;
   generateSlug?: T;

@@ -19,7 +19,7 @@ async function getInvestments() {
     collection: 'investments',
     sort: 'sortOrder',
     limit: 20,
-    overrideAccess: false,
+    draft: false,
   })
   return result.docs
 }

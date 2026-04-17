@@ -30,7 +30,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable, lora.variable)} lang="en" suppressHydrationWarning>
       <head>
-        <meta name="google-site-verification" content="--1jKSIK1kCOOFnJMepl53_iSKFOz68E7HGkFs7F7SI" />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
         <script
@@ -71,5 +70,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     creator: '@soliduscapital',
+  },
+  verification: {
+    google: '--1jKSIK1kCOOFnJMepl53_iSKFOz68E7HGkFs7F7SI',
   },
 }

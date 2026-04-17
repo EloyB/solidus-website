@@ -273,6 +273,7 @@ interface InvestmentDoc {
   name: string
   location: string
   description: string
+  link?: string | null
 }
 
 function InvestmentsSection({ investments }: { investments: InvestmentDoc[] }) {

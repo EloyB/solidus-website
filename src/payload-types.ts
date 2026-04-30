@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     pages: Page;
     investments: Investment;
+    team: Team;
     media: Media;
     users: User;
     redirects: Redirect;
@@ -89,6 +90,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     investments: InvestmentsSelect<false> | InvestmentsSelect<true>;
+    team: TeamSelect<false> | TeamSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
@@ -658,6 +660,22 @@ export interface Investment {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team".
+ */
+export interface Team {
+  id: number;
+  name: string;
+  role: string;
+  bio: string;
+  photo: number | Media;
+  sortOrder?: number | null;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -843,6 +861,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'investments';
         value: number | Investment;
+      } | null)
+    | ({
+        relationTo: 'team';
+        value: number | Team;
       } | null)
     | ({
         relationTo: 'media';
@@ -1045,6 +1067,21 @@ export interface InvestmentsSelect<T extends boolean = true> {
   publishedAt?: T;
   generateSlug?: T;
   slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team_select".
+ */
+export interface TeamSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  bio?: T;
+  photo?: T;
+  sortOrder?: T;
+  publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1496,6 +1533,10 @@ export interface HomePage {
     | null;
   sidecardHeading?: string | null;
   sidecardDescription?: string | null;
+  /**
+   * Optional image displayed in the hero section.
+   */
+  heroImage?: (number | null) | Media;
   sidecardBullets?:
     | {
         text: string;
@@ -1505,6 +1546,10 @@ export interface HomePage {
   aboutLabel?: string | null;
   aboutHeading?: string | null;
   aboutDescription?: string | null;
+  /**
+   * Optional image displayed alongside the about section text.
+   */
+  aboutImage?: (number | null) | Media;
   aboutCards?:
     | {
         title: string;
@@ -1644,6 +1689,7 @@ export interface HomePageSelect<T extends boolean = true> {
       };
   sidecardHeading?: T;
   sidecardDescription?: T;
+  heroImage?: T;
   sidecardBullets?:
     | T
     | {
@@ -1653,6 +1699,7 @@ export interface HomePageSelect<T extends boolean = true> {
   aboutLabel?: T;
   aboutHeading?: T;
   aboutDescription?: T;
+  aboutImage?: T;
   aboutCards?:
     | T
     | {

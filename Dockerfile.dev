@@ -10,4 +10,4 @@ RUN bun install
 EXPOSE 3000
 
 # Run dev server bound to all interfaces so it's accessible from the host
-CMD ["bun", "run", "dev", "--hostname", "0.0.0.0"]
+CMD ["bun", "run", "next", "dev", "--hostname", "0.0.0.0", "--no-turbopack"]

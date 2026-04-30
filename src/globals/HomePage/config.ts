@@ -47,6 +47,15 @@ export const HomePage: GlobalConfig = {
               label: 'Side Card Description',
             },
             {
+              name: 'heroImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Hero Image',
+              admin: {
+                description: 'Optional image displayed in the hero section.',
+              },
+            },
+            {
               name: 'sidecardBullets',
               type: 'array',
               label: 'Side Card Bullet Points',
@@ -78,6 +87,15 @@ export const HomePage: GlobalConfig = {
               name: 'aboutDescription',
               type: 'textarea',
               label: 'Description',
+            },
+            {
+              name: 'aboutImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'About Image',
+              admin: {
+                description: 'Optional image displayed alongside the about section text.',
+              },
             },
             {
               name: 'aboutCards',

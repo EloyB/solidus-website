@@ -15,6 +15,7 @@ const s3Hostname = process.env.S3_BUCKET ? `${process.env.S3_BUCKET}.s3.nl-ams.s
 const nextConfig: NextConfig = {
   transpilePackages: ['@payloadcms/storage-s3'],
   images: {
+    unoptimized: process.env.NODE_ENV === 'development',
     qualities: [100],
     remotePatterns: [
       {
@@ -53,6 +54,11 @@ const nextConfig: NextConfig = {
   redirects,
   turbopack: {
     root: path.resolve(dirname),
+    resolveAlias: {
+      'pino-worker': '',
+      'pino-pretty': '',
+      'pino/file': '',
+    },
   },
 }
 

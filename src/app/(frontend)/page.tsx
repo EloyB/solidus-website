@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
-import type { HomePage } from '@/payload-types'
+import type { HomePage, Media as MediaType } from '@/payload-types'
 import Link from 'next/link'
 import React from 'react'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { Media } from '@/components/Media'
 
 // ─── Data fetching ───────────────────────────────────────────────────────────
 
@@ -17,6 +18,17 @@ async function getInvestments() {
   const payload = await getPayload({ config: configPromise })
   const result = await payload.find({
     collection: 'investments',
+    sort: 'sortOrder',
+    limit: 20,
+    draft: false,
+  })
+  return result.docs
+}
+
+async function getTeamMembers() {
+  const payload = await getPayload({ config: configPromise })
+  const result = await payload.find({
+    collection: 'team',
     sort: 'sortOrder',
     limit: 20,
     draft: false,
@@ -105,15 +117,31 @@ function Hero({ data }: { data: HomePage }) {
           { text: 'Active long-term involvement where we can add value' },
         ]
 
+  const heroImage = typeof data.heroImage === 'object' ? data.heroImage : null
+
   return (
-    <section
-      className="text-white py-24 lg:py-28"
-      style={{
-        background:
-          'linear-gradient(180deg, rgba(15,31,58,0.92), rgba(15,31,58,0.85)), radial-gradient(circle at top right, rgba(198,169,106,0.18), transparent 34%), #0f1f3a',
-      }}
-    >
-      <div className="max-w-[1180px] mx-auto px-5">
+    <section className="relative text-white py-24 lg:py-28 overflow-hidden">
+      {/* Background */}
+      {heroImage ? (
+        <>
+          <div className="absolute inset-0">
+            <Media
+              resource={heroImage}
+              className="h-full w-full [&_img]:h-full [&_img]:w-full [&_img]:object-cover"
+            />
+          </div>
+          <div className="absolute inset-0 bg-navy/80" />
+        </>
+      ) : (
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(15,31,58,0.92), rgba(15,31,58,0.85)), radial-gradient(circle at top right, rgba(198,169,106,0.18), transparent 34%), #0f1f3a',
+          }}
+        />
+      )}
+      <div className="relative max-w-[1180px] mx-auto px-5">
         <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.9fr] gap-10 items-center">
           {/* Left */}
           <div style={{ animation: 'fadeUp 0.7s ease both', animationDelay: '0.05s' }}>
@@ -175,7 +203,14 @@ function Hero({ data }: { data: HomePage }) {
 
 // ─── About ────────────────────────────────────────────────────────────────────
 
-function About({ data }: { data: HomePage }) {
+interface TeamMemberDoc {
+  name: string
+  role: string
+  bio: string
+  photo: MediaType | number
+}
+
+function About({ data, teamMembers = [] }: { data: HomePage; teamMembers?: TeamMemberDoc[] }) {
   const label = data.aboutLabel || 'About'
   const heading = data.aboutHeading || 'A focused entrepreneurial investor'
   const description =
@@ -196,20 +231,79 @@ function About({ data }: { data: HomePage }) {
         },
       ]
 
+  const aboutImage = typeof data.aboutImage === 'object' ? data.aboutImage : null
+
   return (
     <section className="py-[84px] bg-white">
       <div className="max-w-[1180px] mx-auto px-5">
-        <SectionHeader label={label} title={heading} description={description} />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {cards.map((card, i) => (
-            <Card key={i}>
-              <h3 className="font-display font-semibold text-navy text-[1.15rem] mb-2.5">
-                {card.title}
-              </h3>
-              <p className="text-brand-muted leading-relaxed">{card.description}</p>
-            </Card>
-          ))}
-        </div>
+        {aboutImage ? (
+          <>
+            <SectionHeader label={label} title={heading} description={description} />
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.85fr] gap-10 items-start">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+                {cards.map((card, i) => (
+                  <Card key={i}>
+                    <h3 className="font-display font-semibold text-navy text-[1.15rem] mb-2.5">
+                      {card.title}
+                    </h3>
+                    <p className="text-brand-muted leading-relaxed">{card.description}</p>
+                  </Card>
+                ))}
+              </div>
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+                <Media
+                  resource={aboutImage}
+                  className="h-full w-full [&_img]:h-full [&_img]:w-full [&_img]:object-cover"
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <SectionHeader label={label} title={heading} description={description} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {cards.map((card, i) => (
+                <Card key={i}>
+                  <h3 className="font-display font-semibold text-navy text-[1.15rem] mb-2.5">
+                    {card.title}
+                  </h3>
+                  <p className="text-brand-muted leading-relaxed">{card.description}</p>
+                </Card>
+              ))}
+            </div>
+          </>
+        )}
+
+        {teamMembers.length > 0 && (
+          <div className="mt-10 flex flex-col gap-6">
+            {teamMembers.map((member, i) => {
+              const photo = typeof member.photo === 'object' ? member.photo : null
+              return (
+                <Card key={i} className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+                  <div className="shrink-0 w-full md:w-[220px]">
+                    {photo && (
+                      <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-3">
+                        <Media
+                          resource={photo}
+                          className="h-full w-full [&_img]:h-full [&_img]:w-full [&_img]:object-cover"
+                        />
+                      </div>
+                    )}
+                    <h3 className="font-display font-semibold text-navy text-[1.15rem]">
+                      {member.name}
+                    </h3>
+                    <p className="text-gold font-bold tracking-[0.05em] uppercase text-[0.82rem]">
+                      {member.role}
+                    </p>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-brand-muted leading-relaxed">{member.bio}</p>
+                  </div>
+                </Card>
+              )
+            })}
+          </div>
+        )}
       </div>
     </section>
   )
@@ -299,10 +393,28 @@ function InvestmentsSection({ investments }: { investments: InvestmentDoc[] }) {
                   <p className="text-brand-muted leading-relaxed">{inv.description}</p>
                 </div>
                 {inv.link && (
-                  <a href={inv.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-bold text-navy hover:text-gold transition-colors w-fit">
+                  <a
+                    href={inv.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-navy hover:text-gold transition-colors w-fit"
+                  >
                     Visit website
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M1 7h11m0 0L8 3m4 4L8 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M1 7h11m0 0L8 3m4 4L8 11"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </a>
                 )}
@@ -486,7 +598,11 @@ function ContactSection({ data }: { data: HomePage }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function HomePageRoute() {
-  const [data, investments] = await Promise.all([getHomePageData(), getInvestments()])
+  const [data, investments, teamMembers] = await Promise.all([
+    getHomePageData(),
+    getInvestments(),
+    getTeamMembers(),
+  ])
 
   // Fallback investments if none exist in CMS yet
   const investmentDocs = investments.length
@@ -523,7 +639,7 @@ export default async function HomePageRoute() {
   return (
     <main>
       <Hero data={data} />
-      <About data={data} />
+      <About data={data} teamMembers={teamMembers} />
       <Focus data={data} />
       <InvestmentsSection investments={investmentDocs} />
       <Philosophy data={data} />

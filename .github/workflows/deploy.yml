@@ -21,5 +21,6 @@ jobs:
             git pull origin main
             pnpm install
             pnpm generate:importmap
+            pnpm payload migrate
             pnpm build
             pm2 restart solidus

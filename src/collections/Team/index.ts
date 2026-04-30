@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
+import { revalidateTeam } from './hooks/revalidateTeam'
 
 export const Team: CollectionConfig<'team'> = {
   slug: 'team',
@@ -57,6 +58,9 @@ export const Team: CollectionConfig<'team'> = {
       },
     },
   ],
+  hooks: {
+    afterChange: [revalidateTeam],
+  },
   versions: {
     drafts: true,
   },

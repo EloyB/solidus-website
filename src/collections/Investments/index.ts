@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { slugField } from 'payload'
+import { revalidateInvestments, revalidateInvestmentsDelete } from './hooks/revalidateInvestments'
 
 export const Investments: CollectionConfig<'investments'> = {
   slug: 'investments',
@@ -85,6 +86,10 @@ export const Investments: CollectionConfig<'investments'> = {
     },
     slugField(),
   ],
+  hooks: {
+    afterChange: [revalidateInvestments],
+    afterDelete: [revalidateInvestmentsDelete],
+  },
   versions: {
     drafts: true,
   },
